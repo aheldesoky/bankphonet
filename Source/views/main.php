@@ -14,6 +14,7 @@
 				<select id="title" name="title" data-bvalidator="required" class="txtbox">
 					<option value="mr"><?=l('Mr')?></option>
 					<option value="mrs"><?=l('Mrs')?></option>
+					<option value="miss"><?=l('Miss')?></option>
 				</select>
 
 				<label for="firstname"><?=l('FIRST NAME')?>:</label>
@@ -26,14 +27,14 @@
 
 				<label for="country"><?=l('COUNTRY')?>:</label>
 				<select id="country_code" class="txtbox" data-bvalidator="required" name="country_code">
-					<option value=""><?= l('please chose country') ?></option>
+					<option value=""><?= l('please choose country') ?></option>
 <?= generate_select_options($countries, 'title', 'code') ?>
 			</select>
 			<label for="emailreg"><?=l('EMAIL')?>:</label>
-			<input type="text" id="emailreg" name="email" value="" class="txtbox" data-bvalidator="required,email" />
-
+                        <div id="mailcontainer">
+                        </div>
 			<label for="mobile"><?=l('MOBILE')?>:</label>
-			<input type="text" id="mobile" name="mobile" value="<?= l('Ex: 20111')?>" class="txtbox clearonfocus" data-bvalidator="required,number" title="<?= l('Ex: 20111')?>"/>
+			<input type="text" id="mobile" name="mobile" value="<?= l('Ex: 20111')?>" class="txtbox clearonfocus" data-bvalidator="required,number,mobile" title="<?= l('Ex: 20111')?>"/>
 
 
 			<label for="password"><?=l('PASSWORD')?>:</label>
@@ -45,7 +46,10 @@
 
 
 			<div class="clear"></div>
-
+			<div style="text-align: center">
+			<a href="http://bankphonet.com/?con=cms&node=legal" style="font-size: 10px; color: #555555;">By clicking sign up you read & agree with our legal agreement.</a>
+			</div>
+			<div class="clear"></div>
 
 			<input type="submit" value="<?=l('SIGN UP')?>" class="registerbtn"/>
 
@@ -82,18 +86,15 @@
 
 		<h2><?= l('Online banking')?></h2>
 		<p>
-						<?= l('Deposit from ATM or online or by coupons. Deposit 100 get 100, Buy 100 for 100.')?>
+						<?= l('recharge by depositing  at our bank account or by coupons or accept transfers with no fees.')?>
 			<br />
-						<?= l('Transfer credit for cash or vice versa.')?>
+						<?= l('transfer to any member or withdraw at yor bank/ home for 0% ')?>
 			<br />
-						<?= l('Withdraw at your loacl bank account in 72 hours. Withdraw 100 for 99.')?>
-			<br />
-						<?= l('Transfer to any one all free.')?>
-			<br />
-						<?= l('Generate coupons including any amount you choose freely.')?>
+						<?= l('buy online with your credit')?>
+		
 		</p>
 
-		<a href="#" class="moreinfo" title="more info">
+		<a href="?con=cms&node=online-banking" class="moreinfo" title="more info">
 			<img src="views/assets/images/<?= l('more-info.png')?>" width="85" height="22" alt="more info"/>
 		</a>
 	</div>
@@ -103,12 +104,10 @@
 
 		<h2><?= l('Online payment')?></h2>
 		<p>
-						<?= l('Recharge your phone online, pay all your bills online.')?>
-			<br />
-						<?= l('Subscribe to internet online add your advertising to papers,tv, websites online.')?>
+						<?= l('Buy credits and recharge online')?>
 		</p>
 
-		<a href="#" class="moreinfo" title="more info">
+		<a href="?con=cms&node=online-payment" class="moreinfo" title="more info" target="_blank">
 			<img src="views/assets/images/<?= l('more-info.png')?>" width="85" height="22" alt="more info"/>
 		</a>
 	</div>
@@ -118,10 +117,10 @@
 
 		<h2><?= l('Tickets')?></h2>
 		<p>
-						<?= l('Your flight tickets, your hotel tickets, your cinema tickets, your limo etc...')?>
+						<?= l('book your flight tickets cheapest fastest to any where in the world ')?>
 		</p>
 
-		<a href="#" class="moreinfo" title="more info">
+		<a href="http://tickets.bankphonet.com" class="moreinfo" title="more info" target="_blank">
 			<img src="views/assets/images/<?= l('more-info.png')?>" width="85" height="22" alt="more info"/>
 		</a>
 	</div>
@@ -133,7 +132,7 @@
 		<p>
 						<?= l('Integrate your website with our gateway and receive payments online instantly.')?>
 			<br />
-						<?= l('Consumer our API to confirm transactions.')?>
+						<?= l('Consume our API to confirm transactions.')?>
 			<br />
 						<?= l('Accept payments online')?>
 			<br />
@@ -146,3 +145,8 @@
 
 
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#mailcontainer').html('<input type="text" id="emailreg" name="email" value="" class="txtbox" data-bvalidator="required,email" />');
+});
+</script>

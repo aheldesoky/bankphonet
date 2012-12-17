@@ -6,6 +6,11 @@
 
 <div class="transfer">
     <form action="?con=admin&page=deposit" method="post" class="bvalidator">
+    <label for="type">Type of deposit:</label>
+	<select id="type" name="deposittype" data-bvalidator="required" class="txtbox">
+		<option value="credit">Credit</option>
+		<option value="points">Points</option>
+	</select>
 	<label for="accountnumber">Account Mobile number or Email:</label>
 	<input type="text" id="accountnumber" name="mobile" value="<?=$_POST['mobile']?>" class="txtbox" data-bvalidator="required" />
 
@@ -14,7 +19,7 @@
 
 	<div class="clear"></div>
 
-	<input type="submit" value="WITHDRAW NOW" class="btnsubmit"/>
+	<input type="submit" value="DEPOSIT NOW" class="btnsubmit"/>
     </form>
 
 

@@ -22,13 +22,16 @@ class User implements Iuser {
     public $last_access = '';
     public $password = '';
     public $balance = '';
+    public $points = '';
     public $admin = '';
     public $admin_type = '';
+    public $allow_deduction = '';
     public $invite_friends = '';
+    public $resend_activation = '';
 
-    public function __construct(Cdb $db) {
+    public function __construct() {
         ////use global object of db locally
-
+        global $db;
         $this->db = $db;
         //Check User Session
         if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
@@ -51,7 +54,7 @@ class User implements Iuser {
      * @return userobject
      * @throws ERROR_CODE
      */
-    public function register($data, $send_mail = false,$send_sms = true) {
+    public function register($data, $send_mail = false, $send_sms = true, $return_data = false) {
 
         //Validate first and last name
         if (empty($data['firstname']) || empty($data['lastname']))
@@ -86,23 +89,36 @@ class User implements Iuser {
 
         // $this->authenticate_by_id($id);
         // send verify email
-        if($send_sms)
-            $sms = file_get_contents ("http://www.smsbox.com/API/HTTP/default.ashx?Operation=SendMessage&UserName=tqniat&Password=ahmad123&IsUnicode=false&Body=".urlencode('BankPhonet.com verification code: '.$data['verify_code'])."&Sender=Tqniat&Recepients=".$data['mobile']);
-       
+        if ($send_sms)
+            sendSMS(urlencode('BankPhonet.com verification code: ' . $data['verify_code']), $data['mobile']);
+
+//        if ($send_mail) {
+//            $template = "views/accounts/email_register_verify.php";
+//            $body = render($template);
+//            $subject = 'رسالة تفعيل البريد الالكترونى';
+//            //$s = mail($data['email'], $subject, $body, EMAIL_HEADERS);
+//            AmazonEmail($data['email'], $subject, $body);
+//        }
         if ($send_mail) {
             $template = "views/accounts/email_register_verify.php";
             $body = render($template);
             $subject = 'رسالة تفعيل البريد الالكترونى';
-            $s = mail($data['email'], $subject, $body, EMAIL_HEADERS);
+            //$s = mail($data['email'], $subject, $body, EMAIL_HEADERS);
+            AmazonEmail($data['email'], $subject, $body);
         }
-        
-        $this->authenticate_by_id ($id); //Login directly
+
+        $this->authenticate_by_id($id); //Login directly
+
+        if ($return_data)
+            return $this->db->select_record('accounts', "id='$id'");
 
         return 1;
     }
 
     public function verify_mobile($id, $verify_code) {
-        if ($verify_code != $this->verify_code)
+        $user_record = $this->db->select_record('accounts', "id = $id");
+
+        if ($verify_code != $user_record['verify_code'])
             return self::ERR_VERIFY;
 
         return $this->db->update('accounts', array('mobile_verified' => 1), "id = '$id'");
@@ -117,7 +133,7 @@ class User implements Iuser {
      * @throws ERROR_CODE
      *
      */
-    public function authenticate($email, $password, $remember_me) {
+    public function authenticate($email, $password, $remember_me = false, $return_data = false) {
         /* Validate email
           $v_email = $this->validate_email($email, 1);
           if ($v_email != 1)
@@ -142,6 +158,13 @@ class User implements Iuser {
             return self::ERR_USER_BLOCKED;
 
 
+        if (!$return_data) {
+            /** Check admin ip * */
+            if ($user['admin_type'] == 1 && ADMIN_IP != '') {
+                if ($_SERVER['REMOTE_ADDR'] != ADMIN_IP)
+                    return self::ERR_WRONG_IP;
+            }
+        }
 //Set Session Of ID
         $_SESSION['user_id'] = $user['id'];
 //Update Last Access
@@ -154,6 +177,9 @@ class User implements Iuser {
             setcookie('user_id', $this->id, mktime(0, 0, 0, 1, 1, 2030));
         }
 
+
+        if ($return_data)
+            return $user;
 
         return 1;
     }
@@ -204,9 +230,12 @@ class User implements Iuser {
         $this->last_access = $user['last_access'];
         $this->password = $user['password'];
         $this->balance = $user['balance'];
+        $this->points = $user['points'];
         $this->admin = $user['admin'];
         $this->admin_type = $user['admin_type'];
+        $this->allow_deduction = $user['allow_deduction'];
         $this->invite_friends = $user['invite_friends'];
+        $this->resend_activation = $user['resend_activation'];
     }
 
     /**
@@ -261,25 +290,24 @@ class User implements Iuser {
         if ($v_email != 1)
             return $v_email;
         //Validate mobile
-        $v_mobile = $this->validate_mobile($data['mobile'],$id);
+        $v_mobile = $this->validate_mobile($data['mobile'], $id);
         if ($v_mobile != 1)
             return $v_mobile;
-
+        
         /** TODO: update user ads to belong for him if admin updated his username * */
-        return $this->db->update('accounts', $data, "id= $id ");
+        return $this->db->update('accounts', $data, "id= '$id' ");
     }
 
-    
     /**
      * Disable invite friends if i already did
      * @param type $id
      * @return type 
      */
-    
-    public function disableInviteFriends ($id){
-    
-        return $this->db->update('accounts', array ('invite_friends'=>1), "id= $id ");
+    public function disableInviteFriends($id) {
+
+        return $this->db->update('accounts', array('invite_friends' => 1), "id= '$id' ");
     }
+
     /**
      * 
      */
@@ -295,11 +323,14 @@ class User implements Iuser {
         if (empty($mobile))
             return self::ERR_EMPTY_FIELD;
 
+        if (substr(trim($mobile), 0, 1) == 0)
+            return self::ERR_MOBILE_INVALID;
+
         if ($id)
-            $sql = "mobile = '$mobile' AND id != $id";
+            $sql = "mobile = '$mobile' AND id != '$id'";
         else
             $sql = "mobile = '$mobile'";
-        
+
         $user = $this->db->select_record('accounts', $sql);
         if ($user)
             return self::ERR_MOBILE_EXIST;
@@ -325,7 +356,7 @@ class User implements Iuser {
             $email = trim($email);
 
             if ($id)
-                $sql = "email = '$email' AND id != $id";
+                $sql = "email = '$email' AND id != '$id'";
             else
                 $sql = "email = '$email'";
 
@@ -345,7 +376,7 @@ class User implements Iuser {
             return self::ERR_USER_NOT_FOUND;
         return $user;
     }
-    
+
     /**
      * function to check if user exist by email,mobile
      */
@@ -355,15 +386,14 @@ class User implements Iuser {
             return self::ERR_USER_NOT_FOUND;
         return $user;
     }
-    
-    public function getSupperAdmin (){
+
+    public function getSupperAdmin() {
         $user = $this->db->select_record('accounts', "admin_type = 1");
         if (!($user))
             return self::ERR_USER_NOT_FOUND;
-        
+
         return $user;
     }
-
 
     /**
      * return user proile
@@ -422,49 +452,165 @@ class User implements Iuser {
         $iv = "1234567812345678"; //Secret Code 2 it must be 16 digits
         return openssl_decrypt($key, 'aes128', $secret_key, false, $iv);
     }
-    
-    
+
     /**
      * Get all acounts to admin 
      */
-    public function getAccounts ($email=fasle,$count = false,$page_no=false,$order=false,$dir=false){
+    public function getAccounts($email = false, $count = false, $page_no = false, $order = false, $dir = false) {
         //If user Filter used email
-        if($email)
+        if ($email)
             $sql = "(email = '$email' OR mobile = '$email')";
-        
+
         //Don't Get admin
-        if($sql) $sql .= ' AND ';
-        
-        //Don't get supper admin
+        if ($sql)
+            $sql .= ' AND ';
+
+        //Don't get supper admin or not verified
         $sql .= ' admin_type != 1';
-        
-        if($order)
+
+        if ($order)
             $order_by = $order;
         //Check Dir
-        if($dir=='up')
+        if ($dir == 'up')
             $order_by .= " DESC";
-        
-        if($dir=='down')
+
+        if ($dir == 'down')
             $order_by .= " ASC";
-        
-        return $this->db->select ('accounts',$sql,false,false,($order_by) ? $order_by : 'join_date DESC',limit($count,$page_no,true));
+
+        return $this->db->select('accounts', $sql, false, false, ($order_by) ? $order_by : 'join_date DESC', limit($count, $page_no, true));
     }
-    
+
     /**
      * Get Accounts Count 
      */
-    public function getAccountsCount ($email){
+    public function getAccountsCount($email) {
         $sql = "SELECT COUNT(*) FROM accounts ";
-        if($email)
+        if ($email)
             $sql .= "WHERE email ='$email' OR mobile ='$mobile'";
-        
-        if($email)
+
+        if ($email)
             $sql .= ' AND ';
         else
             $sql .= ' WHERE ';
-        
-         $sql .= ' admin != 1';
+
+        $sql .= ' admin != 1';
         return $this->db->query_value($sql);
+    }
+
+    public function forgetPassword($email) {
+
+        $user_account = $this->get_user_by_email_mobile($email);
+        if ($user_account <= 0)
+            return $user_account;
+
+        $link = BASE_URL . '?action=reset-password&user=' . base64_encode($user_account['email']) . '&security=' . md5(md5($user_account['email']) . md5($user_account['salt']));
+        //Send Email to user
+        $subject = "BankPhonet password retrival";
+        global $user;
+        $user['firstname'] = $user_account['firstname'];
+        $user['lastname'] = $user_account['lastname'];
+        $user['link'] = $user_account['link'];
+
+        $msg_body = render('views/accounts/email_forget_password');
+        //$send = mail($user_account['email'], $subject, $msg_body, EMAIL_HEADERS);
+        AmazonEmail($user_account['email'], $subject, $msg_body);
+
+        //If success
+        return 1;
+    }
+
+    public function resetPassword($email) {
+        //Decode email
+        //$email = base64_decode ($base_64_email);
+
+        $user_data = $this->get_user_by_email_mobile($email);
+        if ($user_data <= 0)
+            return $user_data;
+
+        /*
+          if($security_key != md5(md5($user_data['email']).md5($user_data['salt'])))
+          return self::ERR_WRONG_SECURITY_CODE;
+         */
+        $new_password_email = substr(md5(date('Y-m-d H:i:s')), 0, 6);
+
+        $new_password['salt'] = md5('Y-m-d H:i:s');
+        $new_password['password'] = MD5(md5($new_password_email) . md5($new_password['salt']));
+        $this->db->update('accounts', $new_password, "id = {$user_data['id']}");
+        /*
+          //SEND EMAIL AND SMS HERE
+          $subject = "BankPhonet new password";
+          $msg_body  = "Dear ".$user_data['firstname'].' '.$user_data['lastname'] ." \n";
+          $msg_body .= "you have requested to reset your password at bankphonet.com \n";
+          $msg_body .= "and this is the new password please use it to login to your account , you can change it from your account settings \n";
+          $msg_body .= $new_password_email;
+          $msg_body .= "\nFor more details visit bankphonet.com website please";
+          $send = mail($user_data['email'], $subject, $msg_body, EMAIL_HEADERS);
+         */
+
+        //Send Email to user
+        $subject = "BankPhonet password reset";
+        global $user;
+        $user['firstname'] = $user_data['firstname'];
+        $user['lastname'] = $user_data['lastname'];
+        $user['link'] = $user_data['link'];
+        $user['password'] = $new_password_email;
+
+        $msg_body = render('views/accounts/email_forget_password.php');
+
+        //$send = mail($user_account['email'], $subject, $msg_body, EMAIL_HEADERS);
+        AmazonEmail($user_data['email'], $subject, $msg_body);
+
+
+        //SEND SMS
+        sendSMS(urlencode('BankPhonet.com new password:' . $new_password_email), $user_data['mobile']);
+
+
+        return 1;
+    }
+
+    public function resendActivation($id) {
+        $id = intval($id);
+        $user = $this->get_user_by_id($id);
+        if ($user['resend_activation'] == 3)
+            return self::ERR_MAX_REACTIVATE;
+
+        //SEND SMS
+        $sms = "Your verification code is " . $user['verify_code'];
+        sendSMS($sms, $user['mobile']);
+
+        $sql = "UPDATE accounts SET resend_activation = resend_activation + 1 WHERE id = '{$id}'";
+        $this->db->execute($sql);
+
+        return 1;
+    }
+
+    public function changePassword($user_id, $old_password, $new_password, $repassword) {
+
+        //Get User with password
+        $salt = $this->db->select_record('accounts', "id = '$user_id'");
+
+        $user = $this->db->select_record('accounts', "id = '$user_id' AND password = '" . MD5(MD5($old_password) . MD5($salt['salt'])) . "'");
+
+        if (!$user)
+            return self::ERR_WRONG_PASSWORD;
+
+        if ($user['blocked'] == 1)
+            return self::ERR_USER_BLOCKED;
+
+        //Validate password
+        if (mb_strlen($new_password) < 6 || mb_strlen($repassword) < 6) {
+            return self::ERR_PASSWORD_LESS;
+        }
+
+        if ($new_password != $repassword)
+            return self::ERR_PASSWORD_MATCH;
+
+        //Do Change password Here
+        $user_data['salt'] = MD5(date('Y-m-d H:i:s'));
+        $user_data['password'] = MD5(MD5($new_password) . MD5($user_data['salt']));
+        $this->db->update('accounts', $user_data, "id = '$user_id'");
+
+        return 1;
     }
 
     /**

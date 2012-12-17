@@ -1,4 +1,4 @@
-@import 'http://fonts.googleapis.com/css?family=Ubuntu';
+/* @import 'http://fonts.googleapis.com/css?family=Ubuntu'; */
 
 
 *{margin: 0; padding: 0}
@@ -6,7 +6,7 @@
 .clear{clear:both;}
 .rad5{border-radius: 5px; -webkit-border-radius: 5px; -mox-border-radius: 5px;}
 .rad10{border-radius: 10px; -webkit-border-radius: 10px; -mox-border-radius: 10px;}
-
+a img{border: none;}
 
 
 body{
@@ -73,7 +73,7 @@ a.button{
 .header .links .login-form{
 	float: right;
 	width: 550px;
-	height: 45px;
+	height: 60px;
 	padding: 3px 10px;
 	margin: 0 10px 0 0;
 	background: #f3eee2;
@@ -873,7 +873,42 @@ table td a.taction{
 }
 
 
+.reports{
+	float: left;
+}
+
+.reports .reportitem{
+	float: left;
+	width: 900px;
+	border-bottom: 2px solid #CB5E2B;
+	margin-bottom: 20px;
+	margin-left: 20px;
+}
+
+.reports .reportitem h2{
+	color: #004499;
+	font-size: 15px;
+	margin-bottom: 10px;
+}
 
 
+.reports .reportitem .inneritem{
+	width: 225px;
+	float: left;
+}
 
 
+.privacy{
+	width: 100%;
+	font-size: 12px;
+	text-align: center;
+}
+
+.verification-info{
+	float: right;
+	width: 340px;
+}
+.deduction-form{
+	float: left;
+	width: 430px;
+}

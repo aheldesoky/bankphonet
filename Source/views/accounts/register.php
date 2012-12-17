@@ -26,8 +26,11 @@
                                         </select>
                                         
 					<label for="emailreg"><?=l('EMAIL')?>:</label>
+                                        
+                                        <div id="mailcontainer">
 					<input type="text" id="emailreg" name="email" value="<?=$_POST['email']?>" class="txtbox" data-bvalidator="required,email" />
-
+                                        </div>
+                                        
 					<label for="mobile"><?=l('MOBILE')?>:</label>
 					<input type="text" id="mobile" name="mobile" value="<?=$_POST['mobile']?>" class="txtbox" data-bvalidator="required,number" />
 
@@ -41,7 +44,10 @@
 
 
 					<div class="clear"></div>
-
+<div style="text-align: center">
+			<a href="http://bankphonet.com/?con=cms&node=legal" style="font-size: 10px; color: #555555;">By clicking sign up you read & agree with our legal agreement.</a>
+			</div>
+					<div class="clear"></div>
 
 					<input type="submit" value="<?=l('SIGN UP')?>" class="registerbtn"/>
                                         </form>
@@ -49,3 +55,8 @@
 
 			</div>
 
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#mailcontainer').html('<input type="text" id="emailreg" name="email" value="" class="txtbox" data-bvalidator="required,email" />');
+});
+</script>

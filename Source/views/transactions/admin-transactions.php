@@ -3,6 +3,11 @@
 
 
 <div class="filtergrid tfilter">
+	<label for="admintransactiontype" style="width: 150px">TYPE OF TRANSACTION:</label>
+	<select id="admintransactiontype" name="transactiontype" data-bvalidator="required" class="txtbox">
+		<option value="credit" selected>Credit</option>
+		<option value="score">Score</option>
+	</select>
     <form action ="?con=admin&page=admin-transactions" method="post">
 	<label for="from">FROM:</label>
 	<input type="text" id="from" name="from" value="<?=$_SESSION['transaction_from']?>" class="txtbox"/>
@@ -13,7 +18,11 @@
 	<label for="tid">TRANSACTION ID:</label>
 	<input type="text" id="tid" name="tid" value="<?= $_SESSION['transaction_id']?>" class="txtbox"/>
 	<div class="clear"></div> <br /> 
-	<input type="submit" name="set" value="FILTER" />
+        <label for="ft">FROZEN:</label>
+        <label for="all"><input type="radio" name="frozen" <?=($_SESSION['frozen'] == 1 || isset($_SESSION['frozen'])) ? 'CHECKED' : '' ?> value="1" id="all" />All</label>
+        <label for="frozen"><input type="radio" name="frozen" <?=($_SESSION['frozen'] == 2) ? 'CHECKED' : '' ?> value ="2" id="frozen" />Frozen</label>
+	
+        <input type="submit" name="set" value="FILTER" />
 	<input type="submit" name="reset" value="CLEAR FILTER" />
     </form>
 </div>
@@ -40,8 +49,14 @@
 			<td><?=$transaction['to_email']?></td>
 			<td><?=$transaction['amount']?> EGP</td>
 			<td>
-                            <?php if($transaction['type'] == 'out') { ?>
+                            <?php if($transaction['type'] == 'out') {  
+                                if($transaction['total_shipping'] == 0){ ?>	
 				<a href="?con=admin&page=admin-refund&id=<?=$transaction['id']?>" class="taction">REFUND</a>
+                                <?php }else{ ?>
+                            <a href="?con=admin&action=defreez&id=<?=$transaction['id']?>" class="taction"><?=l('DE-FREEZE')?></a>
+                            <a href="?con=admin&action=cancel&id=<?=$transaction['id']?>" class="taction"><?=l('CANCEL')?></a>
+
+                            <?php } ?>
                             <?php }else{ ?>
                                 <?=$transaction['type']?>
                             <?php } ?>

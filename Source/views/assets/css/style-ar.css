@@ -1,4 +1,4 @@
-@import 'http://fonts.googleapis.com/css?family=Ubuntu';
+/* @import 'http://fonts.googleapis.com/css?family=Ubuntu'; */
 
 
 *{margin: 0; padding: 0}
@@ -6,12 +6,12 @@
 .clear{clear:both;}
 .rad5{border-radius: 5px; -webkit-border-radius: 5px; -mox-border-radius: 5px;}
 .rad10{border-radius: 10px; -webkit-border-radius: 10px; -mox-border-radius: 10px;}
-
+a img{border: none;}
 
 
 body{
 	background: #f3f1ec;
-	font-family: 'Ubuntu',Tahoma, Verdana;
+	font-family: 'Ubuntu',Arial, Tahoma, Verdana;
 }
 
 .maincontentholder{

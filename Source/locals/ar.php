@@ -151,7 +151,7 @@ $local_strings['Western union'] =
 	'ويسترن يونيون';
 
 $local_strings['Post office'] = 
-	'مكتب البريد';
+	'حوالة بريدية';
 
 $local_strings['Bank account number'] = 
 	'رقم حساب البنك';
@@ -403,4 +403,163 @@ $local_strings['Accept payments online'] =
 
 $local_strings['DEVELOPERS'] =
 	'المطورين';
+
+$local_strings['REQUEST DEPOSIT'] = 
+	'طلب إيداع';
+
+$local_strings['MY COUPONES'] = 
+	'كوبوناتي';
+
+$local_strings['CHARGE COUPONE'] = 
+	'أشحن كوبون';
+
+$local_strings['CREATE COUPONE'] = 
+	'إنشئ كوبون';
+
+$local_strings['BANKPONET.COM | First egyptian online bank free register recharge pay transfer withdraw 0% fees'] = 
+	'اول بنك الكتروني مصري من غير اي مصاريف او خصم سجل اشحن ادفع حول واسحب فلوسك كامله من غير ماتنقص';
+
+$local_strings['please choose country'] = 
+	'اختر البلد';
+
+$local_strings['recharge by depositing  at our bank account or by coupons or accept transfers with no fees.'] = 
+	'اشحن رصيدك بعمل ايداع في حسابنا البنكي أو عن طريق الكوبونات أو اقبل التحويل بدون مصاريف.';
+
+$local_strings['transfer to any member or withdraw at yor bank/ home for 0% '] = 
+	'حول لاي عضو علي الموقع أو اسحب فلوسك علي حسابك البنكي أو الي منزلك بمصاريف 0%';
+
+$local_strings['buy online with your credit'] = 
+	'اشتري اونلاين برصيدك';
+
+$local_strings['The way to pay bills and recharge online ( soon )'] = 
+	'يمكنك دفع فواتيرك أو اعدة شحن رصيدك - قريبا';
+
+$local_strings['book your flight tickets cheapest fastest to any where in the world '] = 
+	'أسرع وسيلة لحجز أرخص تذاكر الطيران لاي مكان في العالم ';
+
+$local_strings['BANKPHONET.COM | First egyptian online bank free register recharge pay transfer withdraw 0% fees'] = 
+	'BANKPHONET.COM | First egyptian online bank free register recharge pay transfer withdraw 0% fees';
+
+$local_strings['MY COUPONS:'] = 
+	'كوبوناتي';
+
+$local_strings['CREATE NEW COUPONE'] = 
+	'إنشئ كوبون جديد';
+
+$local_strings['COUPONE CODE'] = 
+	'رقم الكوبون';
+
+$local_strings['STATUS'] = 
+	'الحالة';
+
+$local_strings['ACTIVE'] = 
+	'مفعل';
+
+$local_strings['REDEEMED'] = 
+	'تم صرفه';
+
+$local_strings['CREATE COBONE:'] = 
+	'CREATE COBONE:';
+
+$local_strings['Amount to create cobone with:'] = 
+	'Amount to create cobone with:';
+
+$local_strings['CREATE NOW'] = 
+	'إنشئ الان';
+
+$local_strings['CREATE COUBON:'] = 
+	'CREATE COUBON:';
+
+$local_strings['Amount to create coupon with:'] = 
+	'المبلغ الذي تريد ايداعه في الكوبون:';
+
+$local_strings['CHARGE NOW'] = 
+	'إشحن الان';
+
+$local_strings['CREATE COUPON:'] = 
+	'إنشئ كوبون جديد:';
+
+$local_strings['CHARGE COUPON:'] = 
+	'إشحن كوبون:';
+
+$local_strings['Enter coupon code:'] = 
+	'أدخل رقم الكوبون:';
+
+$local_strings['MY COUPONS'] = 
+	'كوبوناتي';
+
+$local_strings['CHARGE COUPON'] = 
+	'إشحن كوبون';
+
+$local_strings['RECHARGE COUPON'] = 
+	'إعادة شحن كوبون';
+
+$local_strings['How it works?'] = 
+	'كيف يعمل بنك فونيت';
+
+$local_strings['You are not allowed to login from this ip'] = 
+	'You are not allowed to login from this ip';
+
+$local_strings['FORGET YOUR PASSWORD'] = 
+	'FORGET YOUR PASSWORD';
+
+$local_strings['CREATE COUPON'] = 
+	'إنشئ كوبون';
+
+$local_strings['RECHARGE NOW'] = 
+	'إشحن الان';
+
+$local_strings['Delete'] = 
+	'حذف';
+
+$local_strings['ABOUT US'] = 
+	'من نحن';
+
+$local_strings['Cheque'] = 
+	'شيك';
+
+$local_strings['please choose bank'] = 
+	'أختر البنك';
+
+$local_strings['Po.Box'] = 
+	'ص. ب.';
+
+$local_strings['bankphonet.com OR phonetmall.com accounts'] = 
+	'سجل الدخول بحساب بنك فونيت أو فونيت مول';
+
+$local_strings['CHARGE VIA MOBILE'] = 
+	'أشحن برصيد الموبايل';
+
+$local_strings['CHARGE VIA MOBILE:'] = 
+	'إشحن رصيدك عن طريق كروت شحن الموبايل:';
+
+$local_strings['Amount to charge with:'] = 
+	'قيمة كارت الشحن:';
+
+$local_strings['Card number:'] = 
+	'الرقم السري لكارت الشحن';
+
+$local_strings['Service provider'] = 
+	'اختر مقدم الخدمة:';
+
+$local_strings['Etisalat'] = 
+	'إتصالات';
+
+$local_strings['Vodafone'] = 
+	'فودافون';
+
+$local_strings['Mobinil'] = 
+	'موبينيل';
+
+$local_strings['Choose provider'] = 
+	'إختر مقدم الخدمة';
+
+$local_strings['The way to pay bills and recharge online'] = 
+	'يمكنك دفع فواتيرك أو إعادة شحن رصيدك';
+
+$local_strings['Consume our API to confirm transactions.'] = 
+	'استخدم واجهة التطبيقات للتاكد من العمليات من خلال الموقع';
+
+$local_strings['ONLINE PAYMENT'] = 
+	'الدفع عبر الانترنت';
 

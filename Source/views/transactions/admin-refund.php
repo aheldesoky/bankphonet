@@ -1,5 +1,5 @@
 
-<h1 class="inh1"><a href="?con=admin">ADMIN HOME </a> >> REFUND TRANSACTION</h1>
+<h1 class="inh1"><a href="?con=admin">ADMIN HOME </a> >> REFUND CREDIT TRANSACTION</h1>
 
 
 <div class="transfer">

@@ -46,6 +46,27 @@
         <span>METHOD</span> <?= $withdraw['method'] ?>
     </div>
 
+    
+    <?php if($withdraw['method'] == 'check'){ ?>
+     <div class="profile-item">
+        <span>NAME:</span> <?= $withdraw['name'] ?>
+    </div>
+
+    <div class="profile-item">
+        <span>ADDRESS:</span> <?= $withdraw['address'] ?>
+    </div>
+    
+    <div class="profile-item">
+        <span>MOBILE:</span> <?= $withdraw['mobile'] ?>
+    </div>
+    
+    <div class="profile-item">
+        <span>PO.Box:</span> <?= $withdraw['po_box'] ?>
+    </div>
+    
+    <?php } ?>
+    
+    
     <?php if($withdraw['method'] == 'bank'){ ?>
     <div class="profile-item">
         <span>BANK NAME:</span> <?= $withdraw['bank_title'] ?>
@@ -98,9 +119,11 @@
         <span>DATE:</span> <?= $withdraw['datetime1'] ?>
     </div>
     
+    <?php if($withdraw['accepted'] == 0){ ?>
     <div>
         <a href="?con=admin&page=admin-refund&id=<?=$withdraw['transaction_id']?>" class="btnsubmit" style="margin-right:10px;">REFUND</a>
     </div>
+    <?php } ?>
 </div>
 <div class="clear"></div>
 <br /><br /><br /><br />

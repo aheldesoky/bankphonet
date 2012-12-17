@@ -3,12 +3,28 @@ require 'Zend/Soap/Server.php';
 require 'Zend/Soap/AutoDiscover.php';
 
 
-// DATABASE configuration
-define("BASE_URL", 'http://localhost/bankphonet/Source/');
-define("DB_HOST", "192.168.1.99");
-define("DB_USER", "root");
-define("DB_PASS", "password123");
-define("DB_DATABASE", "bankphonet");
+define ('LOCAL_MODE', false);
+
+
+
+if (LOCAL_MODE)
+{
+	// test configuration
+	define("BASE_URL", 'http://localhost/bankphonet/Source/');
+	define("DB_HOST", "192.168.1.99");
+	define("DB_USER", "root");
+	define("DB_PASS", "password123");
+	define("DB_DATABASE", "bankphonet");
+} 
+else {
+	// production configuration
+	define("BASE_URL", 'http://www.bankphonet.com/');
+
+	define("DB_HOST", "localhost");
+	define("DB_USER", "root");
+	define("DB_PASS", "Hlun&922Urwzq'");
+	define("DB_DATABASE", "bankphonet");	
+}
   
         
 require_once __DIR__.'/../includes/db.php';

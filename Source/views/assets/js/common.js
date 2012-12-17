@@ -1,5 +1,38 @@
 $(function(){
-	$('.bvalidator').bValidator();; //Validate Forms			
+	$('.bvalidator').bValidator();; //Validate Forms
+	
+	$('select#admintransactiontype').change(function(){
+		if($(this).val()=='credit')
+			window.location.replace('?con=admin&page=admin-transactions')
+		if($(this).val()=='score')
+			window.location.replace('?con=admin&page=admin-transactions-score')
+	})
+	$('select#transactiontype').change(function(){
+		if($(this).val()=='credit')
+			window.location.replace('?page=transactions')
+		if($(this).val()=='points')
+			window.location.replace('?page=transactions-score')
+	})
+	
+	$('#btndeduct').click(function(){
+		var deduction_type = $('#deductiontype').val();
+		var account_number = $('#accountnumber').val();
+		var amount = $('#amount').val();
+		var pin = $('#pin').val();
+		
+		var dataString = 'deductiontype='+deduction_type+'&accountnumber='+account_number+'&amount='+amount+'&pin='+pin;
+		
+		$.ajax({
+			type: "POST",  
+			url: "?page=verifydeduction",  
+			data: dataString,  
+			success: function(data) {  
+				console.log(data);
+			    $('.verification-info').html(data);  
+			}  
+		})
+	});
+	
 });
 
  // fancybox

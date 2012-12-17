@@ -11,6 +11,11 @@
 			<a href="?page=transactions"><?=l('MY TRANSACTIONS')?></a>
 			<a href="?page=transfer"><?=l('NEW TRANSFER')?></a>
 			<a href="?page=request-withdraw"><?=l('REQUEST WITHDRAW')?></a>
+			<a href="?page=request-deposit"><?=l('REQUEST DEPOSIT')?></a>
+			<a href="?page=cobones"><?=l('MY COUPONS')?></a>
+			<a href="?page=charge-cobone"><?=l('RECHARGE COUPON')?></a>
+			<a href="?page=create-cobone"><?=l('CREATE COUPON')?></a>
+			<!-- <a href="?page=mobile-charge"><?=l('CHARGE VIA MOBILE')?></a>-->
 		</div>
 
 		<?php }elseif($page['name'] == 'partner-solutions'){?>

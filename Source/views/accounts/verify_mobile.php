@@ -8,7 +8,8 @@
 					
 					<div class="clear"></div>
 
-
+                                        <a href="?action=resendverification" style="margin-left: 155px;color: #0782C1; font-size: 13px;"><?= l('RESEND VERIFICATION CODE')?></a><br/>
+                                       
 					<input type="submit" value="<?=l('VERIFY')?>" class="registerbtn"/>
 
                                         </form>

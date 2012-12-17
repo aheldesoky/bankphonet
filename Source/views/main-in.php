@@ -24,18 +24,15 @@
 
 		<h2><?= l('Online banking')?></h2>
 		<p>
-						<?= l('Deposit from ATM or online or by coupons. Deposit 100 get 100, Buy 100 for 100.')?>
+						<?= l('recharge by depositing  at our bank account or by coupons or accept transfers with no fees.')?>
 			<br />
-						<?= l('Transfer credit for cash or vice versa.')?>
+						<?= l('transfer to any member or withdraw at yor bank/ home for 0% ')?>
 			<br />
-						<?= l('Withdraw at your loacl bank account in 72 hours. Withdraw 100 for 99.')?>
-			<br />
-						<?= l('Transfer to any one all free.')?>
-			<br />
-						<?= l('Generate coupons including any amount you choose freely.')?>
+						<?= l('buy online with your credit')?>
+
 		</p>
 
-		<a href="#" class="moreinfo" title="more info">
+		<a href="?con=cms&node=online-banking" class="moreinfo" title="more info">
 			<img src="views/assets/images/<?= l('more-info.png')?>" width="85" height="22" alt="more info"/>
 		</a>
 	</div>
@@ -45,12 +42,10 @@
 
 		<h2><?= l('Online payment')?></h2>
 		<p>
-						<?= l('Recharge your phone online, pay all your bills online.')?>
-			<br />
-						<?= l('Subscribe to internet online add your advertising to papers,tv, websites online.')?>
+						<?= l('The way to pay bills and recharge online')?>
 		</p>
 
-		<a href="#" class="moreinfo" title="more info">
+		<a href="?con=cms&node=online-payment" class="moreinfo" title="more info">
 			<img src="views/assets/images/<?= l('more-info.png')?>" width="85" height="22" alt="more info"/>
 		</a>
 	</div>
@@ -60,10 +55,10 @@
 
 		<h2><?= l('Tickets')?></h2>
 		<p>
-						<?= l('Your flight tickets, your hotel tickets, your cinema tickets, your limo etc...')?>
+						<?= l('book your flight tickets cheapest fastest to any where in the world ')?>
 		</p>
 
-		<a href="#" class="moreinfo" title="more info">
+		<a href="http://tickets.bankphonet.com" class="moreinfo" title="more info" target="_blank">
 			<img src="views/assets/images/<?= l('more-info.png')?>" width="85" height="22" alt="more info"/>
 		</a>
 	</div>
@@ -75,7 +70,7 @@
 		<p>
 						<?= l('Integrate your website with our gateway and receive payments online instantly.')?>
 			<br />
-						<?= l('Consumer our API to confirm transactions.')?>
+						<?= l('Consume our API to confirm transactions.')?>
 			<br />
 						<?= l('Accept payments online')?>
 			<br />

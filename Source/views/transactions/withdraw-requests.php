@@ -24,6 +24,7 @@
 		<th><a href="?con=admin&action=set-order-withdraw&order=amount">AMOUNT<?=($_SESSION['withdraw_dir'] == 'up' && $_SESSION['withdraw_order'] == 'amount') ? '&uArr;' : (($_SESSION['withdraw_order'] == 'amount') ? '&dArr;' : '') ?></a></th>
 		<th><a href="?con=admin&action=set-order-withdraw&order=datetime1">REQUEST DATE<?=($_SESSION['withdraw_dir'] == 'up' && $_SESSION['withdraw_order'] == 'datetime1') ? '&uArr;' : (($_SESSION['withdraw_order'] == 'datetime1') ? '&dArr;' : '') ?></a></th>
 		<th>DETAILS</th>
+		<th>ACTION</th>
 
     </tr>
 
@@ -41,7 +42,13 @@
 			<td><?=$withdraw['amount']?></td>
 			<td><?=$withdraw['datetime1']?></td>
                         <td><a href="?con=admin&page=withdrawl-request-details&id=<?=$withdraw['id']?>">Details</a></td>
-			
+                        <td>
+                         <?php if($withdraw['accepted'] == 0){ ?>
+                        <a href="?con=admin&action=accept-withdraw&id=<?=$withdraw['id']?>">ACCEPT</a>
+                        <?php }else{ ?>
+                        - -
+                        <?php } ?>
+			</td>
 		</tr>
 
                 <?php  } ?>

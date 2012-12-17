@@ -303,15 +303,18 @@ function end_render () {
 
 
 /* ----------------- clean all html ----------------- */
-function clean_html (&$var) {
-	if (is_array ($var)) {
-		foreach ($var as $key => $value) {
-			if (!is_array($value) && ($key !="description_en" && $key != "description_ar"))
-				$var[$key] = strip_tags ($value);
+function clean_html(&$var,Cdb $db=null)
+{
+    $skipp_arr = array ('description_en','description_ar');
+	if (is_array($var)) {
+		foreach ($var as $key => $value ) {
+			if (!is_array($value) && !in_array($key, $skipp_arr)){
+				$var[$key] = mysqli_real_escape_string($db->connection,strip_tags($value));
+                        }
 		}
-	} else $var = strip_tags ($var);
+	} else
+		$var = mysqli_real_escape_string($db->connection,strip_tags($var));
 }
-
 
 
 
@@ -537,41 +540,54 @@ function save_session_messages()
 // template contains {page} and {active}
 // ex. 		'href="index.php?page-no={page}" class="{active}"'
 
-function mypaging ($pages_count, $page_no, $attr_template, $prev_text = 'Previous', $next_text = 'Next')
-{
-	if ($pages_count == 1) return;
-	
-	$start_page = $page_no;
-	if ($start_page < 1) $start_page = 1;
-	
-	$end_page = $page_no + 9;
-	if ($end_page > $pages_count) $end_page = $pages_count;
-	
-	echo '<div class="paging">';
+function mypaging($pages_count, $page_no, $attr_template, $prev_text = '&lt;', $next_text = '&gt;') {
+    if ($pages_count == 1)
+        return;
 
-	if ( ($page_no > 1) and ($prev_text) ) {
-		$html = str_replace ('{page}', $page_no - 1, $attr_template);
-		$html = str_replace ('{active}', '', $html);
- 		echo "<a {$html}>".l($prev_text)."</a>";
-	}
-	
-	for ($page = $start_page; $page <= $end_page; $page++) {
-		$html = str_replace ('{page}', $page, $attr_template);
-		if ($page == $page_no) 
-			$html = str_replace ('{active}', 'active', $html);
-		else
-			$html = str_replace ('{active}', '', $html);
+    $start_page = $page_no - 3;
+    if ($start_page < 1)
+        $start_page = 1;
 
- 		echo "<a {$html}>{$page}</a>";
-	}
-	
-	if ( ($page_no < $pages_count) and ($next_text) ) {
-		$html = str_replace ('{page}', $page_no + 1, $attr_template);
-		$html = str_replace ('{active}', '', $html);
- 		echo "<a {$html}>".l($next_text)."</a>";
-	}
+    $end_page = $page_no + 3;
+    if ($end_page > $pages_count)
+        $end_page = $pages_count;
 
-	echo '</div>';
+    /** Fix pagin with small numbers of pages * */
+    if ($end_page <= 3)
+        $start_page = 1;
+
+    echo '<div class="paging">';
+    $fhtml = str_replace('{page}', 1, $attr_template);
+    if ($page_no != 1)
+        echo "<a {$fhtml}> &lt;&lt; </a>";
+
+
+    if (($page_no > 1) and ($prev_text)) {
+        $html = str_replace('{page}', $page_no - 1, $attr_template);
+        $html = str_replace('{active}', '', $html);
+        echo "<a {$html}>{$prev_text}</a>";
+    }
+
+    for ($page = $start_page; $page <= $end_page; $page++) {
+        $html = str_replace('{page}', $page, $attr_template);
+        if ($page == $page_no)
+            $html = str_replace('{active}', 'current', $html);
+        else
+            $html = str_replace('{active}', '', $html);
+
+        echo "<a {$html}>{$page}</a>";
+    }
+
+    if (($page_no < $pages_count) and ($next_text)) {
+        $html = str_replace('{page}', $page_no + 1, $attr_template);
+        $html = str_replace('{active}', '', $html);
+        echo "<a {$html}>{$next_text}</a>";
+    }
+
+    $lhtml = str_replace('{page}', $pages_count, $attr_template);
+    if ($page_no != $pages_count)
+        echo "<a {$lhtml}> &gt;&gt; </a>";
+    echo '</div>';
 }
 
 
@@ -681,3 +697,19 @@ function ckeditor()
 }
 
 
+/*--------------------------- Extract get to url ---------------------*/
+function extractUrl ($url_array){
+    
+    if(!is_array($url_array))
+        return false;
+    
+    //Fix multi page no
+    unset ($url_array['page-no']);
+    foreach ($url_array as $k=>$r){
+        
+        if($url)$url.='&';
+        $url .= $k.'='. $r;
+    }
+    
+    return $url;
+}

@@ -1,4 +1,6 @@
 <?php
+error_log(E_ALL);
+ini_set('display_errors', '1');
 
 // timer of script
 $start_time = microtime(true);  

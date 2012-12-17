@@ -4,8 +4,17 @@
 
 <div class="transactionsactions">
 	<a href="?page=transfer" class="button"><?=l('NEW TRANSFER')?></a>
+	<?php if($oUser->allow_deduction ==1){ ?>
+	<a href="?page=deduction" class="button"><?=l('DEDUCT')?></a>
+	<?php }?>
 </div>
-
+<div class="filtergrid tfilter">
+	<label for="transactiontype" style="width: 150px"><?=l('TYPE OF TRANSACTION')?>:</label>
+	<select id="transactiontype" name="transactiontype" data-bvalidator="required" class="txtbox">
+		<option value="credit" selected><?=l('Credit')?></option>
+		<option value="points"><?=l('Points')?></option>
+	</select>
+</div>
 <?php if ($transactions){ ?>
 <table cellpadding="0" cellspacing="0">
 
@@ -29,9 +38,13 @@
 			<td><?=l($rec['type'])?></td>
 			<td>
 			<?php 
-                            if($rec['type'] == 'in') { ?>	
+                            if($rec['type'] == 'in') {
+                                if($rec['total_shipping'] == 0){?>
+                                    
                             <a href="?page=refund&id=<?=$rec['id']?>" class="taction"><?=l('REFUND')?></a>
-                            <?php }else{ ?>
+                            
+                            
+                            <?php }else{ echo l('Frozen');}}else{ ?>
                             --
                             <?php } ?>
                         </td>

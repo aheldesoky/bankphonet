@@ -3,6 +3,7 @@
 </div>
 <div class="transactionsactions">
 	<a href="?page=editprofile" class="button"><?=l('EDIT MY PROFILE')?></a>
+	<a href="?page=change-password" class="button"><?=l('CHANGE PASSWORD')?></a>
 </div>
 
 

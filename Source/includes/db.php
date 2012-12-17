@@ -21,7 +21,7 @@
 
 // configurations
 // --------------
-define('DB_DEBUG', true);
+define('DB_DEBUG', false);
 define('DB_CACHE_URL', 'cache/db/');
 define('DB_CACHE_EXPIRE', 1);
 
@@ -574,10 +574,13 @@ class Cdb
                         return false; //Faield
                     }
                 }
+                
                 $id = $this->connection->insert_id; // MUST BE CALLED beafore commit
                 //if no error commit transaction
                 $this->connection->commit();
-                return $id;
+                $this->connection->autocommit(true);
+                //Fix if no insert in transaction
+                return ($id) ? $id : true;
             }else{
                 return false; //nothing to do
             }

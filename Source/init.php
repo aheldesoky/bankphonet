@@ -11,7 +11,7 @@ require_once __DIR__.'/includes/app_common.php';
 require_once __DIR__.'/includes/locals.php';
 
 
-//require_once __DIR__.'/includes/db.php';
+require_once __DIR__.'/includes/db.php';
 
 require_once __DIR__.'/includes/upload.php';
 require_once __DIR__.'/includes/thumb_core.php';
@@ -26,15 +26,15 @@ require_once __DIR__.'/models/cms.php';
 
 // ------------------------ start --------------------------
 // db
-//$db = Cdb::singleton();//initiate singlton class from db
-//$db->execute("SET time_zone = '+02:00'");
+$db = Cdb::singleton();//initiate singlton class from db
+$db->execute("SET time_zone = '+02:00'");
 
 
 //Models
 
 //user object
-//$oUser = new User($db);
-
+$oUser = new User($db);
+//echo '<pre>';print_r($oUser);exit;
 $oTransactions = new transactions($db);
 
 $oCms = new cms($db);
@@ -63,8 +63,9 @@ if ($_SESSION['notify_msg']) {
 
 
 // ------------------------ anti injection hacking --------------------------
-clean_html ($_POST);
-clean_html ($_GET);
+clean_html ($_POST, $db);
+clean_html ($_GET, $db);
+//clean_html ($_REQUEST, $db);
 
 
 
