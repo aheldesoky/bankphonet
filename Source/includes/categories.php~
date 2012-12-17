@@ -1,0 +1,23 @@
+<?php
+
+$categories = array (
+	'1'=>array('id'=>'1','title'=>'سيارات ومحركات','class'=>'cars'),
+	'2'=>array('id'=>'2','title'=>'عقارات','class'=>'building'),
+	'3'=>array('id'=>'3','title'=>'موبايلات واتصالات','class'=>'phone'),
+	'4'=>array('id'=>'4','title'=>'كمبيوتر وتقنيات','class'=>'computer'),
+	'5'=>array('id'=>'5','title'=>'أثاث ومفروشات','class'=>'chair'),
+	'6'=>array('id'=>'6','title'=>'حيوانات','class'=>'cat'),
+	'7'=>array('id'=>'7','title'=>'أجهزة كهربائية','class'=>'fesha'),
+	'8'=>array('id'=>'8','title'=>'ملابس وموضة','class'=>'dress'),
+	'9'=>array('id'=>'9','title'=>'صحة وجمال','class'=>'health')
+);
+
+
+$subcategories = array (
+	'1'=>array(
+		'20'=>array('id'=>'20','title'=>'سيارات','main_cat'=>'1'),
+		'21'=>array('id'=>'21','title'=>'سيارات نقل'),
+		'22'=>array('id'=>'22','title'=>'دراجات نارية'),
+		'23'=>array('id'=>'23','title'=>'بطاريات وكاوتشوك'),
+		'23'=>array('id'=>'23','title'=>'قطع غيار سيارات'))
+);
